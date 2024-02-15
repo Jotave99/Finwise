@@ -1,6 +1,6 @@
 export type Category = {
     [tag:string]: {
-        tittle: string;
+        title: string;
         color: string;
         expense: boolean;
     }

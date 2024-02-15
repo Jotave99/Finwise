@@ -5,7 +5,7 @@ import { Category } from './types/Category';
 import { items } from './data/items';
 import { categories } from './data/categories';
 import { getCurrentMonth, filterListByMonth } from './helpers/dateFilter';
-
+import { TableArea } from './components/TableArea';
 
 const App = () => {
   const [list, setList] = useState(items);
@@ -26,7 +26,7 @@ const App = () => {
 
         {/* Área de inserção */}
 
-        {/* Tabela de itens */}
+        <TableArea list={filteredList} />
       </C.Body>
 
     </C.Container>
