@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 interface UserData {
@@ -37,6 +38,9 @@ const Home: React.FC = () => {
       {salary !== null && (
         <p>Seu salário atual é: R$ {salary.toFixed(2)}</p>
       )}
+      <Link to="/addSalary">
+        <button>Adicionar Salário</button>
+      </Link>
     </div>
   );
 };
