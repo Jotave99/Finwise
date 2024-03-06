@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const AddSalary: React.FC = () => {
-  const [salary, setSalary] = useState('');
+const AddBalance: React.FC = () => {
+  const [balance, setbalance] = useState('');
   const navigate = useNavigate();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSalary(event.target.value);
+    setbalance(event.target.value);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -19,7 +19,7 @@ const AddSalary: React.FC = () => {
         return;
       }
 
-      const response = await axios.post('http://localhost:3001/salary', { salary }, {
+      const response = await axios.post('http://localhost:3001/balance', { balance }, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -29,22 +29,22 @@ const AddSalary: React.FC = () => {
       navigate("/home");
       
     } catch (error) {
-      console.error('Erro ao adicionar salário:', error);
+      console.error('Erro ao adicionar saldo:', error);
     }
   };
 
   return (
     <div>
-      <h2>Adicionar Salário</h2>
+      <h2>Adicionar Saldo</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Salário:
-          <input type="number" value={salary} onChange={handleInputChange} />
+          Saldo:
+          <input type="number" value={balance} onChange={handleInputChange} />
         </label>
-        <button type="submit">Adicionar Salário</button>
+        <button type="submit">Adicionar Saldo</button>
       </form>
     </div>
   );
 };
 
-export default AddSalary;
+export default AddBalance;
