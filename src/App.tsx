@@ -5,6 +5,7 @@ import Signup from './model/Signup';
 import Login from './model/Login';
 import Home from './model/Home';
 import AddBalance from './model/AddBalance';
+import AddExpense from './model/AddExpense';
 
 const App: React.FC = () => {
   return (
@@ -13,7 +14,8 @@ const App: React.FC = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/addSalary" element={<AddBalance />} />
+        <Route path="/addBalance" element={<AddBalance />} />
+        <Route path="/addExpense" element={<AddExpense />} />
       </Routes>
     </Router>
   );
