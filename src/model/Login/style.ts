@@ -8,16 +8,17 @@ export const Container = styled.div`
 `;
 
 export const FormContainer = styled.div`
-  width: 300px;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #f5f5f5;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 export const Title = styled.h2`
+  font-size: 2rem;
+  color: #031A6E;
+  margin-bottom: 2rem;
   text-align: center;
-  margin-bottom: 20px;
 `;
 
 export const Form = styled.form`
@@ -26,31 +27,51 @@ export const Form = styled.form`
 `;
 
 export const Input = styled.input`
-  margin-bottom: 15px;
-  padding: 10px;
+  padding: 0.5rem;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 2px 1px #007bff;
+  }
 `;
 
 export const Button = styled.button`
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
   background-color: #031A6E;
   color: #fff;
+  border: none;
+  border-radius: 0.25rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  margin-bottom: 1rem;
 
   &:hover {
-    background-color: #023477;
+    background-color: #0056b3;
+  }
+`;
+
+export const SignupButton = styled.button`
+  padding: 0.5rem 5rem;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #031A6E;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+
+  &:hover {
+    color: #0056b3;
   }
 `;
 
 export const ErrorMessage = styled.p`
   color: red;
-  margin-top: 10px;
-  font-size: 14px;
+  font-size: 0.8rem;
+  text-align: center;
+  margin-bottom: 0;
 `;
-

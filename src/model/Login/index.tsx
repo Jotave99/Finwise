@@ -1,8 +1,8 @@
 // Login.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { Container, FormContainer, Title, Form, Input, Button, ErrorMessage } from './style';
+import { useNavigate, Link } from 'react-router-dom';
+import { Container, FormContainer, Title, Form, Input, Button, SignupButton, ErrorMessage } from './style';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -33,11 +33,14 @@ const Login: React.FC = () => {
   return (
     <Container>
       <FormContainer>
-        <Title>Fazer Login</Title>
+        <Title>Bem-Vindo!</Title>
         <Form onSubmit={handleSubmit}>
           <Input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
           <Input type="password" name="password" placeholder="Senha" value={formData.password} onChange={handleChange} />
           <Button type="submit">Login</Button>
+          <Link to="/signup">
+            <SignupButton>Cadastre-se</SignupButton>
+          </Link>
           {error && <ErrorMessage>{error}</ErrorMessage>} {/* Exibir mensagem de erro, se houver */}
         </Form>
       </FormContainer>
