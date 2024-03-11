@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Wrapper, Title, Saldo, Button, ExpensesTitle, ExpensesList, ExpensesItem } from './style';
 
 interface UserData {
   balance: number;
@@ -67,28 +68,27 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Bem-vindo à Página Inicial</h2>
-      {balance !== null && (
-        <p>Seu saldo atual é de: R$ {balance.toFixed(2)}</p>
-      )}
+    <Wrapper>
+      <Title>Bem-vindo à Página Inicial</Title>
+      {balance !== null && <Saldo>Seu saldo atual é de: R$ {balance.toFixed(2)}</Saldo>}
       <Link to="/addBalance">
-        <button>Adicionar saldo</button>
+        <Button>Adicionar saldo</Button>
       </Link>
-      <h3>Despesas</h3>
-      <ul>
-        {Array.isArray(expenses) && expenses.map(expense => (
-          <li key={expense._id}>
-            <p>Nome: {expense.name}</p>
-            <p>Tipo: {expense.type}</p>
-            <p>Valor: R$ {expense.value.toFixed(2)}</p>
-          </li>
-        ))}
-      </ul>
+      <ExpensesTitle>Despesas</ExpensesTitle>
+      <ExpensesList>
+        {Array.isArray(expenses) &&
+          expenses.map(expense => (
+            <ExpensesItem key={expense._id}>
+              <p>Nome: {expense.name}</p>
+              <p>Tipo: {expense.type}</p>
+              <p>Valor: R$ {expense.value.toFixed(2)}</p>
+            </ExpensesItem>
+          ))}
+      </ExpensesList>
       <Link to="/addExpense">
-        <button>Adicionar Despesa</button>
+        <Button>Adicionar Despesa</Button>
       </Link>
-    </div>
+    </Wrapper>
   );
 };
 
