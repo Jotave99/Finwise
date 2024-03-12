@@ -1,7 +1,8 @@
 // Signup.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, FormContainer, Title, Form, Input, Button, ErrorMessage } from './style';
+import { Link } from 'react-router-dom';
+import { Container, FormContainer, Title, SubTitle, Form, Input, Button, ErrorMessage } from './style';
 
 const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -29,7 +30,8 @@ const Signup: React.FC = () => {
   return (
     <Container>
       <FormContainer>
-        <Title>Criar Conta</Title>
+        <Title>Crie sua conta!</Title>
+        <SubTitle>Se for cadastrado, por favor, faça <Link to="/login">login</Link></SubTitle>
         <Form onSubmit={handleSubmit}>
           <Input type="text" name="name" placeholder="Nome" value={formData.name} onChange={handleChange} />
           <Input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />

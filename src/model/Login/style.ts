@@ -5,6 +5,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: #f5f5f5;
 `;
 
 export const FormContainer = styled.div`
@@ -56,7 +57,8 @@ export const Button = styled.button`
 
 export const SignupButton = styled.button`
   padding: 0.5rem 5rem;
-  font-size: 1rem;
+  font-size: 0.90rem;
+  font-weight: bold;
   background-color: #fff;
   color: #031A6E;
   border: none;
