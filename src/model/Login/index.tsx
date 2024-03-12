@@ -1,4 +1,3 @@
-// Login.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -9,7 +8,7 @@ const Login: React.FC = () => {
     email: '',
     password: ''
   });
-  const [error, setError] = useState<string | null>(null); // State para armazenar mensagens de erro
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,12 +20,12 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3001/auth/login', formData);
-      const { token } = response.data; // Obter o token da resposta
-      localStorage.setItem('token', token); // Armazenar o token no localStorage
-      navigate('/home'); // Redirecionar para a página inicial
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+      navigate('/home');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
-      setError('Usuário ou senha incorretos'); // Definir mensagem de erro
+      setError('Usuário ou senha incorretos');
     }
   };
 
@@ -41,7 +40,7 @@ const Login: React.FC = () => {
           <Link to="/signup">
             <SignupButton>Cadastre-se</SignupButton>
           </Link>
-          {error && <ErrorMessage>{error}</ErrorMessage>} {/* Exibir mensagem de erro, se houver */}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
         </Form>
       </FormContainer>
     </Container>

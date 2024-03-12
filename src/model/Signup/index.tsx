@@ -12,6 +12,8 @@ const Signup: React.FC = () => {
     confirmPassword: ''
   });
 
+  const [error, setError] = useState<string | null>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -24,6 +26,7 @@ const Signup: React.FC = () => {
       console.log(response.data);
     } catch (error) {
       console.error('Erro ao criar conta:', error);
+      setError('Credenciais inválidas.');
     }
   };
 
@@ -38,6 +41,7 @@ const Signup: React.FC = () => {
           <Input type="password" name="password" placeholder="Senha" value={formData.password} onChange={handleChange} />
           <Input type="password" name="confirmPassword" placeholder="Confirmar Senha" value={formData.confirmPassword} onChange={handleChange} />
           <Button type="submit">Criar Conta</Button>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
         </Form>
       </FormContainer>
     </Container>

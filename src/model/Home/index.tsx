@@ -27,7 +27,7 @@ const Home: React.FC = () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        throw new Error('Token not found');
+        throw new Error('Token não encontrado.');
       }
 
       const response = await axios.get<UserData>('http://localhost:3001/balance', {
@@ -38,7 +38,7 @@ const Home: React.FC = () => {
 
       setBalance(response.data.balance);
     } catch (error) {
-      console.error('Error fetching user balance:', error);
+      console.error('Erro ao buscar o saldo do usuário.', error);
     }
   };
 
@@ -46,7 +46,7 @@ const Home: React.FC = () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        throw new Error('Token not found');
+        throw new Error('Token não encontrado.');
       }
 
       const response = await axios.get<{expenses: ExpenseData[]}>('http://localhost:3001/expense', {
@@ -55,15 +55,13 @@ const Home: React.FC = () => {
         },
       });
 
-      console.log('Response data:', response.data);
-
       if (Array.isArray(response.data.expenses)) {
         setExpenses(response.data.expenses);
       } else {
-        console.error('Received data is not an array:', response.data.expenses);
+        console.error('Os dados recebidos não são um array.', response.data.expenses);
       }
     } catch (error) {
-      console.error('Error fetching user expenses:', error);
+      console.error('Erro ao buscar as despesas do usuário.', error);
     }
   };
 
@@ -74,7 +72,7 @@ const Home: React.FC = () => {
       <Link to="/addBalance">
         <Button>Adicionar saldo</Button>
       </Link>
-      <ExpensesTitle>Despesas</ExpensesTitle>
+      <ExpensesTitle>Meus registros recentes:</ExpensesTitle>
       <ExpensesList>
         {Array.isArray(expenses) &&
           expenses.map(expense => (

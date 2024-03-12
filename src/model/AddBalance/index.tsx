@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Container, FormContainer, Title, Text, Form, Input, Button, ErrorMessage } from './style';
 
 const AddBalance: React.FC = () => {
   const [balance, setbalance] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,20 +32,22 @@ const AddBalance: React.FC = () => {
       
     } catch (error) {
       console.error('Erro ao adicionar saldo:', error);
+      setError('Formato incorreto.');
     }
   };
 
   return (
-    <div>
-      <h2>Adicionar Saldo</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Saldo:
-          <input type="number" value={balance} onChange={handleInputChange} />
-        </label>
-        <button type="submit">Adicionar Saldo</button>
-      </form>
-    </div>
+    <Container>
+      <FormContainer>
+        <Title>Adicione seu saldo:</Title>
+        <Form onSubmit={handleSubmit}>
+        <Text>Saldo</Text>
+        <Input type="number" placeholder="Saldo do banco + dinheiro vivo, etc" value={balance} onChange={handleInputChange} />
+        <Button type="submit">Adicionar Saldo</Button>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+        </Form>
+      </FormContainer>
+    </Container>
   );
 };
 
