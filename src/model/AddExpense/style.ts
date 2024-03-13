@@ -16,10 +16,15 @@ export const FormContainer = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: #031A6E;
   margin-bottom: 2rem;
   text-align: center;
+`;
+
+export const Text = styled.p`
+    color: #808080;
+    margin-top: 1rem;
 `;
 
 export const Form = styled.form`
@@ -48,26 +53,10 @@ export const Button = styled.button`
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
-  margin-top: 4rem;
+  margin-top: 2rem;
 
   &:hover {
     background-color: #0056b3;
-  }
-`;
-
-export const SignupButton = styled.button`
-  padding: 0.5rem 5rem;
-  font-size: 0.90rem;
-  font-weight: bold;
-  background-color: #fff;
-  color: #031A6E;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  margin-bottom: 1rem;
-
-  &:hover {
-    color: #0056b3;
   }
 `;
 

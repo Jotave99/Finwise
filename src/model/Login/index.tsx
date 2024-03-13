@@ -32,7 +32,7 @@ const Login: React.FC = () => {
   return (
     <Container>
       <FormContainer>
-        <Title>Bem-Vindo!</Title>
+        <Title>Bem-Vindo ao Finwise!</Title>
         <Form onSubmit={handleSubmit}>
           <Input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
           <Input type="password" name="password" placeholder="Senha" value={formData.password} onChange={handleChange} />
