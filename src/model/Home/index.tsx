@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Wrapper, Title, Saldo, Button, ExpensesTitle, ExpensesList, ExpensesItem } from './style';
-
+import { Wrapper, Title, BalanceContainer, Saldo, Button, Info, ExpensesSection, MonthlyExpenses, GoalExpenses, ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, ExpensesItem } from './style';
+import Add from '../../images/add.png';
 interface UserData {
   balance: number;
 }
@@ -17,6 +17,7 @@ interface ExpenseData {
 const Home: React.FC = () => {
   const [balance, setBalance] = useState<number | null>(null);
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUserData();
@@ -65,27 +66,49 @@ const Home: React.FC = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
   return (
     <Wrapper>
       <Title>Bem-vindo à Página Inicial</Title>
-      {balance !== null && <Saldo>Seu saldo atual é de: R$ {balance.toFixed(2)}</Saldo>}
-      <Link to="/addBalance">
-        <Button>Adicionar saldo</Button>
-      </Link>
+      <BalanceContainer>
+      {balance !== null && (
+        <Info>
+          <Saldo>Saldo atual: <br /> R$ {balance.toFixed(2)}</Saldo>
+          <Link to="/addBalance">
+            <Button>+</Button>
+          </Link>
+        </Info>
+      )}
+      <ExpensesSection>
+        <MonthlyExpenses>Gastos desse mês:</MonthlyExpenses>
+        <GoalExpenses>Meta de gastos:</GoalExpenses>
+      </ExpensesSection>
+    </BalanceContainer>
+      <div>
       <ExpensesTitle>Meus registros recentes:</ExpensesTitle>
-      <ExpensesList>
-        {Array.isArray(expenses) &&
-          expenses.map(expense => (
-            <ExpensesItem key={expense._id}>
-              <p>Nome: {expense.name}</p>
-              <p>Tipo: {expense.type}</p>
-              <p>Valor: R$ {expense.value.toFixed(2)}</p>
-            </ExpensesItem>
-          ))}
-      </ExpensesList>
       <Link to="/addExpense">
-        <Button>Adicionar Despesa</Button>
+        <ExpensesButton><img src={Add} width={'20px'} /></ExpensesButton>
       </Link>
+      </div>
+      <ExpensesContainer>
+        <ExpensesList>
+          {Array.isArray(expenses) &&
+            expenses.map(expense => (
+              <ExpensesItem key={expense._id}>
+                <div>
+                  <p>{expense.name}</p>
+                  <p>{expense.type}</p>
+                </div>
+                <p>R$ {expense.value.toFixed(2)}</p>
+              </ExpensesItem>
+            ))}
+        </ExpensesList>
+      </ExpensesContainer>
+      <Button onClick={handleLogout}>Logout</Button>
     </Wrapper>
   );
 };
