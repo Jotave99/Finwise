@@ -32,6 +32,10 @@ export const Saldo = styled.p`
   margin-bottom: 1rem;
 `;
 
+export const BalanceColor = styled.p`
+  color: #34AA44;
+`;
+
 export const Info = styled.div`
   display: flex;
   justify-content: space-between;
@@ -58,6 +62,10 @@ export const ExpensesSection = styled.div`
 
 export const MonthlyExpenses = styled.p`
   font-size: 1.2rem;
+`;
+
+export const MonthlyExpensesColor = styled.p`
+  color: #E6492D;
 `;
 
 export const GoalExpenses = styled.p`

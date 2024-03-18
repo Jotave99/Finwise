@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Wrapper, Title, BalanceContainer, Saldo, Button, Info, ExpensesSection, MonthlyExpenses, GoalExpenses, ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, ExpensesItem } from './style';
+import { Wrapper, Title, BalanceContainer, Saldo, BalanceColor, Button, Info, ExpensesSection, MonthlyExpenses, MonthlyExpensesColor, GoalExpenses, ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, ExpensesItem } from './style';
 import Add from '../../images/add.png';
+
 interface UserData {
   balance: number;
 }
@@ -16,12 +17,14 @@ interface ExpenseData {
 
 const Home: React.FC = () => {
   const [balance, setBalance] = useState<number | null>(null);
+  const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchUserData();
     fetchUserExpenses();
+    fetchTotalExpenses();
   }, []);
 
   const fetchUserData = async () => {
@@ -66,6 +69,25 @@ const Home: React.FC = () => {
     }
   };
 
+  const fetchTotalExpenses = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token não encontrado.');
+      }
+
+      const response = await axios.get<{ totalExpenses: number }>('http://localhost:3001/expense/total', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setTotalExpenses(response.data.totalExpenses);
+    } catch (error) {
+      console.error('Erro ao buscar o total das despesas do usuário.', error);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -75,24 +97,24 @@ const Home: React.FC = () => {
     <Wrapper>
       <Title>Bem-vindo à Página Inicial</Title>
       <BalanceContainer>
-      {balance !== null && (
-        <Info>
-          <Saldo>Saldo atual: <br /> R$ {balance.toFixed(2)}</Saldo>
-          <Link to="/addBalance">
-            <Button>+</Button>
-          </Link>
-        </Info>
-      )}
-      <ExpensesSection>
-        <MonthlyExpenses>Gastos desse mês:</MonthlyExpenses>
-        <GoalExpenses>Meta de gastos:</GoalExpenses>
-      </ExpensesSection>
-    </BalanceContainer>
+        {balance !== null && (
+          <Info>
+            <Saldo>Saldo atual: R$ <BalanceColor>{balance.toFixed(2)}</BalanceColor></Saldo>
+            <Link to="/addBalance">
+              <Button>+</Button>
+            </Link>
+          </Info>
+        )}
+        <ExpensesSection>
+          <MonthlyExpenses>Gastos desse mês:<MonthlyExpensesColor>R$ -{totalExpenses !== null ? totalExpenses.toFixed(2) : 'Carregando...'}</MonthlyExpensesColor></MonthlyExpenses>
+          <GoalExpenses>Meta de gastos:</GoalExpenses>
+        </ExpensesSection>
+      </BalanceContainer>
       <div>
-      <ExpensesTitle>Meus registros recentes:</ExpensesTitle>
-      <Link to="/addExpense">
-        <ExpensesButton><img src={Add} width={'20px'} /></ExpensesButton>
-      </Link>
+        <ExpensesTitle>Meus registros recentes:</ExpensesTitle>
+        <Link to="/addExpense">
+          <ExpensesButton><img src={Add} width={'20px'} /></ExpensesButton>
+        </Link>
       </div>
       <ExpensesContainer>
         <ExpensesList>
