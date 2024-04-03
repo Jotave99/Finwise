@@ -3,13 +3,13 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Container, FormContainer, Title, Text, Form, Input, Button, ErrorMessage } from './style';
 
-const AddBalance: React.FC = () => {
-  const [balance, setbalance] = useState('');
+const AddGoal: React.FC = () => {
+  const [amount, setAmount] = useState('');
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setbalance(event.target.value);
+    setAmount(event.target.value);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -21,7 +21,7 @@ const AddBalance: React.FC = () => {
         return;
       }
 
-      const response = await axios.post('http://localhost:3001/balance', { balance }, {
+      const response = await axios.post('http://localhost:3001/goal', { amount }, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -31,7 +31,7 @@ const AddBalance: React.FC = () => {
       navigate("/home");
       
     } catch (error) {
-      console.error('Erro ao adicionar saldo:', error);
+      console.error('Erro ao adicionar a meta:', error);
       setError('Formato incorreto.');
     }
   };
@@ -39,16 +39,21 @@ const AddBalance: React.FC = () => {
   return (
     <Container>
       <FormContainer>
-        <Title>Adicione seu saldo:</Title>
+        <Title>Adicione sua meta:</Title>
         <Form onSubmit={handleSubmit}>
-        <Text>Saldo</Text>
-        <Input type="number" placeholder="Saldo do banco + dinheiro vivo, etc" value={balance} onChange={handleInputChange} />
-        <Button type="submit">Adicionar Saldo</Button>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
+          <Text>Meta</Text>
+          <Input 
+            type="number" 
+            placeholder="Informe a sua meta de gastos" 
+            value={amount} 
+            onChange={handleInputChange} 
+          />
+          <Button type="submit">Adicionar Meta</Button>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
         </Form>
       </FormContainer>
     </Container>
   );
 };
 
-export default AddBalance;
+export default AddGoal;

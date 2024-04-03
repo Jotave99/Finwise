@@ -29,11 +29,12 @@ export const BalanceContainer = styled.div`
 export const Saldo = styled.p`
   font-size: 1.8rem;
   color: #fff;
-  margin-bottom: 1rem;
+  margin-top: 0.25rem;
 `;
 
 export const BalanceColor = styled.p`
   color: #34AA44;
+  margin-top: -0.25rem;
 `;
 
 export const Info = styled.div`
@@ -50,13 +51,14 @@ export const Button = styled.button`
   background-color: #4E5E97;
   color: #fff;
   margin-left: 100px;
+  margin-bottom: 4rem;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
 `;
 
 export const ExpensesSection = styled.div`
-  margin-top: 1rem;
+  margin-top: -3rem;
   color: #fff;
 `;
 
@@ -66,6 +68,7 @@ export const MonthlyExpenses = styled.p`
 
 export const MonthlyExpensesColor = styled.p`
   color: #E6492D;
+  margin-top: -0.25rem;
 `;
 
 export const GoalExpenses = styled.p`

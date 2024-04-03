@@ -5,6 +5,7 @@ import Login from './model/Login';
 import Home from './model/Home';
 import AddBalance from './model/AddBalance';
 import AddExpense from './model/AddExpense';
+import AddGoal from './model/AddGoal';
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/addBalance" element={<AddBalance />} />
           <Route path="/addExpense" element={<AddExpense />} />
+          <Route path="/addGoal" element={<AddGoal />} />
         </Routes>
     </Router>
   );

@@ -15,16 +15,22 @@ interface ExpenseData {
   value: number;
 }
 
+interface GoalData {
+  amount: number;
+}
+
 const Home: React.FC = () => {
   const [balance, setBalance] = useState<number | null>(null);
   const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
+  const [goal, setGoal] = useState<GoalData | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchUserData();
     fetchUserExpenses();
     fetchTotalExpenses();
+    fetchUserGoal();
   }, []);
 
   const fetchUserData = async () => {
@@ -88,6 +94,29 @@ const Home: React.FC = () => {
     }
   };
 
+  const fetchUserGoal = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token não encontrado.');
+      }
+  
+      const response = await axios.get<{ goal: GoalData }>('http://localhost:3001/goal', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.data.goal) {
+        setGoal(response.data.goal);
+      } else {
+        console.error('Meta de gastos não encontrada.');
+      }
+    } catch (error) {
+      console.error('Erro ao buscar a meta de gastos do usuário:', error);
+    }
+  };  
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -99,7 +128,9 @@ const Home: React.FC = () => {
       <BalanceContainer>
         {balance !== null && (
           <Info>
-            <Saldo>Saldo atual: R$ <BalanceColor>{balance.toFixed(2)}</BalanceColor></Saldo>
+            <Saldo>Saldo atual:
+            <BalanceColor>R$ {balance.toFixed(2)}</BalanceColor>
+            </Saldo>
             <Link to="/addBalance">
               <Button>+</Button>
             </Link>
@@ -107,7 +138,10 @@ const Home: React.FC = () => {
         )}
         <ExpensesSection>
           <MonthlyExpenses>Gastos desse mês:<MonthlyExpensesColor>R$ -{totalExpenses !== null ? totalExpenses.toFixed(2) : 'Carregando...'}</MonthlyExpensesColor></MonthlyExpenses>
-          <GoalExpenses>Meta de gastos:</GoalExpenses>
+          <GoalExpenses>Meta de gastos: <br />R$ {goal !== null && goal.amount !== undefined ? goal.amount.toFixed(2) : 'Carregando...'}</GoalExpenses>
+          <Link to="/addGoal">
+            <Button>+</Button>
+          </Link>
         </ExpensesSection>
       </BalanceContainer>
       <div>
