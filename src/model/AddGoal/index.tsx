@@ -21,7 +21,7 @@ const AddGoal: React.FC = () => {
         return;
       }
 
-      const response = await axios.post('http://localhost:3001/goal', { amount }, {
+      const response = await axios.post('http://localhost:3001/goal', { amount: parseFloat(amount) }, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

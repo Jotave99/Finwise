@@ -138,18 +138,19 @@ const Home: React.FC = () => {
         )}
         <ExpensesSection>
           <MonthlyExpenses>Gastos desse mês:<MonthlyExpensesColor>R$ -{totalExpenses !== null ? totalExpenses.toFixed(2) : 'Carregando...'}</MonthlyExpensesColor></MonthlyExpenses>
-          <GoalExpenses>Meta de gastos: <br />R$ {goal !== null && goal.amount !== undefined ? goal.amount.toFixed(2) : 'Carregando...'}</GoalExpenses>
-          <Link to="/addGoal">
-            <Button>+</Button>
-          </Link>
+          <Info>
+            <GoalExpenses>Meta de gastos: <br />R$ {goal !== null && goal.amount !== undefined ? goal.amount.toFixed(2) : 'Carregando...'}</GoalExpenses>
+            <Link to="/addGoal">
+              <Button>+</Button>
+            </Link>
+          </Info>
         </ExpensesSection>
       </BalanceContainer>
-      <div>
-        <ExpensesTitle>Meus registros recentes:</ExpensesTitle>
+      <ExpensesTitle>Meus registros recentes:
         <Link to="/addExpense">
           <ExpensesButton><img src={Add} width={'20px'} /></ExpensesButton>
         </Link>
-      </div>
+      </ExpensesTitle>
       <ExpensesContainer>
         <ExpensesList>
           {Array.isArray(expenses) &&
