@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { RemindersContainer, RemindersList, RemindersItem, Wrapper, AddRemindersContainer, Info, Button, ReminderH1, ReminderH2 } from './style';
+import { RemindersContainer, RemindersList, RemindersItem, Wrapper, AddRemindersContainer, Info, Button, ReminderH1, ReminderH2, IFrame } from './style';
 
 interface ReminderData {
   _id: string;
@@ -72,6 +72,7 @@ const RemindersPage: React.FC = () => {
           ))}
         </RemindersList>
       </RemindersContainer>
+      <IFrame src="https://charts.mongodb.com/charts-finwise-back-end-hwlur/embed/dashboards?id=660e8b98-a329-4e84-8346-b4364f6db9f6&theme=light&autoRefresh=true&maxDataAge=3600&showTitleAndDesc=false&scalingWidth=fixed&scalingHeight=fixed"></IFrame>
     </Wrapper>
   );
 };

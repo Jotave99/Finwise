@@ -63,6 +63,8 @@ const AddReminder: React.FC = () => {
         </Form>
       </FormContainer>
     </Container>
+
+    
   );
 };
 

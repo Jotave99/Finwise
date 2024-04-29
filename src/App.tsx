@@ -8,6 +8,7 @@ import AddExpense from './model/AddExpense';
 import AddGoal from './model/AddGoal';
 import RemindersPage from './model/RemindersPage';
 import AddReminder from './model/AddReminder';
+import GraphicPage from './model/GraphicPage';
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
           <Route path="/addGoal" element={<AddGoal />} />
           <Route path="/remindersPage" element={<RemindersPage />} />
           <Route path="/addReminder" element={<AddReminder />} />
+          <Route path="/graphicPage" element={<GraphicPage />} />
         </Routes>
     </Router>
   );

@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-export const AddRemindersContainer = styled.div`
+export const GraphicContainer = styled.div`
   background-color: #031A6E;
   padding: 2rem;
   margin-top: -50px;
@@ -28,13 +28,13 @@ export const Info = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const ReminderH1 = styled.p`
+export const GraphicH1 = styled.p`
   font-size: 1rem;
   color: #fff;
   margin-top: 0.25rem;
 `;
 
-export const ReminderH2 = styled.p`
+export const GraphicH2 = styled.p`
   font-size: 1.8rem;
   color: #fff;
   margin-top: 0.25rem;
@@ -55,47 +55,9 @@ export const Button = styled.button`
   }
 `;
 
-export const RemindersContainer = styled.div`
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 0.25rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-export const RemindersList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-export const RemindersItem = styled.li`
-  padding: 1rem;
-  border-bottom: 1px solid #ddd;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  p {
-    margin: 0;
-    margin-bottom: 0.5rem;
-  }
-`;
-
 export const IFrame = styled.iframe`
 background: #F1F5F4;
+align-items: center;
 border: none;border-radius: 2px;
 box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
 width: 100vw;
