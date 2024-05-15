@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Seta from '../../images/seta.png';
 import { Container, FormContainer, Title, Text, Form, Input, Button, ErrorMessage } from './style';
 
 const AddGoal: React.FC = () => {
@@ -39,6 +40,9 @@ const AddGoal: React.FC = () => {
   return (
     <Container>
       <FormContainer>
+      <Link to="/home">
+          <img src={Seta} />
+        </Link>
         <Title>Adicione sua meta:</Title>
         <Form onSubmit={handleSubmit}>
           <Text>Meta</Text>

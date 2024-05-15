@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Seta from '../../images/seta.png'
 import { Container, FormContainer, Title, Text, Form, Input, Button, ErrorMessage } from './style';
 
 const AddExpense: React.FC = () => {
@@ -48,6 +49,9 @@ const AddExpense: React.FC = () => {
   return (
     <Container>
       <FormContainer>
+        <Link to="/home">
+          <img src={Seta} />
+        </Link>
       <Title>Adicione uma Despesa:</Title>
       <Text>Pode ser tanto um gasto, quanto um recebimento.</Text>
         <Form onSubmit={handleSubmit}>

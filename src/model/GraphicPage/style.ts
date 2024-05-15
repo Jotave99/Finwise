@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 
 export const GraphicContainer = styled.div`
   background-color: #031A6E;
-  padding: 2rem;
+  padding: 5rem;
   margin-top: -50px;
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -58,8 +58,9 @@ export const Button = styled.button`
 export const IFrame = styled.iframe`
 background: #F1F5F4;
 align-items: center;
-border: none;border-radius: 2px;
+border: none;
+border-radius: 2px;
 box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
-width: 100vw;
-height: 100vh;
+width: 32vw;
+height: 99vh;
 `;

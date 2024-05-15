@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Seta from '../../images/seta.png'
 import { Button, Container, ErrorMessage, Form, FormContainer, Input, Text, Title } from './style';
 
 const AddReminder: React.FC = () => {
@@ -50,6 +51,9 @@ const AddReminder: React.FC = () => {
   return (
     <Container>
       <FormContainer>
+        <Link to="/remindersPage">
+          <img src={Seta} />
+        </Link>
         <Title>Adicionar Lembrete</Title>
         <Form onSubmit={handleSubmit}>
             <Text>Nome:</Text>

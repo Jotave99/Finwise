@@ -72,7 +72,6 @@ const RemindersPage: React.FC = () => {
           ))}
         </RemindersList>
       </RemindersContainer>
-      <IFrame src="https://charts.mongodb.com/charts-finwise-back-end-hwlur/embed/dashboards?id=660e8b98-a329-4e84-8346-b4364f6db9f6&theme=light&autoRefresh=true&maxDataAge=3600&showTitleAndDesc=false&scalingWidth=fixed&scalingHeight=fixed"></IFrame>
     </Wrapper>
   );
 };
