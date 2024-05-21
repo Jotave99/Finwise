@@ -24,6 +24,7 @@ export const BalanceContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
 `;
 
 export const Saldo = styled.p`
@@ -32,9 +33,9 @@ export const Saldo = styled.p`
   margin-top: 0.25rem;
 `;
 
-export const BalanceColor = styled.p`
+export const BalanceColor = styled.span`
   color: #34AA44;
-  margin-top: -0.25rem;
+  font-size: 2rem;
 `;
 
 export const Info = styled.div`
@@ -50,8 +51,6 @@ export const Button = styled.button`
   font-size: 1.2rem;
   background-color: #4E5E97;
   color: #fff;
-  margin-left: 100px;
-  margin-bottom: 4rem;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
@@ -62,17 +61,18 @@ export const Button = styled.button`
 `;
 
 export const ExpensesSection = styled.div`
-  margin-top: -3rem;
+  margin-top: 1rem;
   color: #fff;
+  width: 100%;
 `;
 
 export const MonthlyExpenses = styled.p`
   font-size: 1.2rem;
 `;
 
-export const MonthlyExpensesColor = styled.p`
+export const MonthlyExpensesColor = styled.span`
   color: #E6492D;
-  margin-top: -0.25rem;
+  font-size: 2rem;
 `;
 
 export const GoalExpenses = styled.p`
@@ -83,38 +83,40 @@ export const ExpensesTitle = styled.h3`
   font-size: 1.8rem;
   color: #333;
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `;
 
 export const ExpensesButton = styled.button`
   padding: 0.5rem 1rem;
   font-size: 1.2rem;
-  width: 10px;
-  background-color: #f5f5f5;
-  color: #031A6E;
-  margin-left: 100px;
+  background-color: transparent;
   border: none;
-  border-radius: 0.25rem;
   cursor: pointer;
-`;
 
+  img {
+    width: 20px;
+  }
+`;
 
 export const ExpensesContainer = styled.div`
   background-color: #fff;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
 `;
 
 export const ExpensesList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  width: 100%;
 `;
 
 export const ExpensesItem = styled.li`
@@ -134,5 +136,10 @@ export const ExpensesItem = styled.li`
   p {
     margin: 0;
     margin-bottom: 0.5rem;
+    font-size: 1rem;
   }
+`;
+
+export const LogoutButton = styled(Button)`
+  margin-top: 2rem;
 `;

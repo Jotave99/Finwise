@@ -1,7 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Wrapper, Title, BalanceContainer, Saldo, BalanceColor, Button, Info, ExpensesSection, MonthlyExpenses, MonthlyExpensesColor, GoalExpenses, ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, ExpensesItem } from './style';
+import {
+  Wrapper,
+  Title,
+  BalanceContainer,
+  Saldo,
+  BalanceColor,
+  Button,
+  Info,
+  ExpensesSection,
+  MonthlyExpenses,
+  MonthlyExpensesColor,
+  GoalExpenses,
+  ExpensesTitle,
+  ExpensesButton,
+  ExpensesContainer,
+  ExpensesList,
+  ExpensesItem,
+  LogoutButton
+} from './style';
 import Add from '../../images/add.png';
 
 interface UserData {
@@ -31,6 +49,7 @@ const Home: React.FC = () => {
     fetchUserExpenses();
     fetchTotalExpenses();
     fetchUserGoal();
+    checkData();
   }, []);
 
   const fetchUserData = async () => {
@@ -100,13 +119,13 @@ const Home: React.FC = () => {
       if (!token) {
         throw new Error('Token não encontrado.');
       }
-  
+
       const response = await axios.get<{ goal: GoalData }>('http://localhost:3001/goal', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       if (response.data.goal) {
         setGoal(response.data.goal);
       } else {
@@ -115,21 +134,57 @@ const Home: React.FC = () => {
     } catch (error) {
       console.error('Erro ao buscar a meta de gastos do usuário:', error);
     }
-  };  
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
 
+  const checkData = () => {
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth() + 1; // Os meses começam do zero, então somamos 1
+    if (currentDay === 1) {
+      clearExpensesAndGoals();
+    }
+  };
+
+  const clearExpensesAndGoals = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token não encontrado.');
+      }
+
+      await axios.delete('http://localhost:3001/expense', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      await axios.delete('http://localhost:3001/goal', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setTotalExpenses(0);
+      setExpenses([]);
+      setGoal(null);
+    } catch (error) {
+      console.error('Erro ao limpar os dados.', error);
+    }
+  };
+
   return (
     <Wrapper>
-      <Title>Bem-vindo à Página Inicial</Title>
+      <Title>Bem-vindo, João Victor!</Title>
       <BalanceContainer>
         {balance !== null && (
           <Info>
-            <Saldo>Saldo atual:
-            <BalanceColor>R$ {balance.toFixed(2)}</BalanceColor>
+            <Saldo>Saldo atual:<br />
+              <BalanceColor>R$ {balance.toFixed(2)}</BalanceColor>
             </Saldo>
             <Link to="/addBalance">
               <Button>+</Button>
@@ -137,35 +192,34 @@ const Home: React.FC = () => {
           </Info>
         )}
         <ExpensesSection>
-          <MonthlyExpenses>Gastos desse mês:<MonthlyExpensesColor>R$ -{totalExpenses !== null ? totalExpenses.toFixed(2) : 'Carregando...'}</MonthlyExpensesColor></MonthlyExpenses>
-          <Info>
-            <GoalExpenses>Meta de gastos: <br />R$ {goal !== null && goal.amount !== undefined ? goal.amount.toFixed(2) : 'Carregando...'}</GoalExpenses>
-            <Link to="/addGoal">
-              <Button>+</Button>
-            </Link>
-          </Info>
+          <MonthlyExpenses>Gastos esse mês:<br /> <MonthlyExpensesColor>R$ -{totalExpenses?.toFixed(2)}</MonthlyExpensesColor></MonthlyExpenses>
+          {goal !== null && (
+            <GoalExpenses>Meta de gastos:<br /> <BalanceColor>R$ {goal.amount}</BalanceColor></GoalExpenses>
+          )}
         </ExpensesSection>
       </BalanceContainer>
-      <ExpensesTitle>Meus registros recentes:
-        <Link to="/addExpense">
-          <ExpensesButton><img src={Add} width={'20px'} /></ExpensesButton>
-        </Link>
-      </ExpensesTitle>
+
       <ExpensesContainer>
+        <ExpensesTitle>Despesas recentes
+          <Link to="/addExpense">
+            <ExpensesButton>
+              <img src={Add} alt="Add Expense" />
+            </ExpensesButton>
+          </Link>
+        </ExpensesTitle>
         <ExpensesList>
-          {Array.isArray(expenses) &&
-            expenses.map(expense => (
-              <ExpensesItem key={expense._id}>
-                <div>
-                  <p>{expense.name}</p>
-                  <p>{expense.type}</p>
-                </div>
-                <p>R$ {expense.value.toFixed(2)}</p>
-              </ExpensesItem>
-            ))}
+          {expenses.map(expense => (
+            <ExpensesItem key={expense._id}>
+              <div>
+                <p>Descrição: {expense.name}</p>
+                <p>Categoria: {expense.type}</p>
+              </div>
+              <p>Valor: <MonthlyExpensesColor>R$ -{expense.value}</MonthlyExpensesColor></p>
+            </ExpensesItem>
+          ))}
         </ExpensesList>
       </ExpensesContainer>
-      <Button onClick={handleLogout}>Logout</Button>
+      <LogoutButton onClick={handleLogout}>Sair</LogoutButton>
     </Wrapper>
   );
 };
