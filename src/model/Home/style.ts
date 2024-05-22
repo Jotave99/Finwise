@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #333;
   margin-bottom: 1rem;
 `;
@@ -24,11 +24,11 @@ export const BalanceContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
+  width: 400px;
 `;
 
 export const Saldo = styled.p`
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: #fff;
   margin-top: 0.25rem;
 `;
@@ -48,7 +48,7 @@ export const Info = styled.div`
 
 export const Button = styled.button`
   padding: 0.5rem 1rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   background-color: #4E5E97;
   color: #fff;
   border: none;
@@ -61,7 +61,10 @@ export const Button = styled.button`
 `;
 
 export const ExpensesSection = styled.div`
+  display: flex;
   margin-top: 1rem;
+  justify-content: space-between;
+  align-items: center;
   color: #fff;
   width: 100%;
 `;
@@ -72,11 +75,12 @@ export const MonthlyExpenses = styled.p`
 
 export const MonthlyExpensesColor = styled.span`
   color: #E6492D;
-  font-size: 2rem;
+  font-size: 1.7rem;
 `;
 
 export const GoalExpenses = styled.p`
   font-size: 1.2rem;
+  margin-right: 50px;
 `;
 
 export const ExpensesTitle = styled.h3`
@@ -86,7 +90,7 @@ export const ExpensesTitle = styled.h3`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 300px;
 `;
 
 export const ExpensesButton = styled.button`
@@ -109,20 +113,24 @@ export const ExpensesContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
+  width: 500px;
 `;
 
 export const ExpensesList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
-  width: 100%;
+  width: 500px;
+`;
+
+export const ExpensesIcon = styled.img`
+  margin-right: -10rem;
 `;
 
 export const ExpensesItem = styled.li`
   padding: 1rem;
   border-bottom: 1px solid #ddd;
-  width: 100%;
+  width: 460px;
   display: flex;
   justify-content: space-between;
   align-items: center;

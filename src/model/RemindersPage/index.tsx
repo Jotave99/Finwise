@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { RemindersContainer, RemindersList, RemindersItem, Wrapper, AddRemindersContainer, Info, Button, ReminderH1, ReminderH2, IFrame } from './style';
+import card from '../../images/card.png';
+import { RemindersContainer, RemindersList, RemindersItem, Wrapper, AddRemindersContainer, Info, ReminderH1, ReminderH2, Header, AddButton, ReminderTitle, ReminderValue, ReminderDate, ReminderCard, ReminderIcon } from './style';
 
 interface ReminderData {
   _id: string;
@@ -51,23 +52,29 @@ const RemindersPage: React.FC = () => {
 
   return (
     <Wrapper>
-        <AddRemindersContainer>
-          <ReminderH1>Lembrete de contas a pagar</ReminderH1>
+      <AddRemindersContainer>
+      <Header>
+        <ReminderH1>Lembrete de contas a pagar</ReminderH1>
+      </Header>
         <Info>
-            <ReminderH2>Adicione um lembrete:</ReminderH2>
-            <Link to="/addReminder">
-            <Button>+</Button>
-            </Link>
-          </Info>
+          <ReminderH2>Adicione um lembrete:</ReminderH2>
+          <Link to="/addReminder">
+            <AddButton>+</AddButton>
+          </Link>
+        </Info>
       </AddRemindersContainer>
-      <br />
       <RemindersContainer>
         <RemindersList>
           {reminders.map((reminder) => (
             <RemindersItem key={reminder._id}>
-              <p>Nome: {reminder.name}</p>
-              <p>Data: {new Date(reminder.date).toLocaleDateString()}</p>
-              <p>Valor: R$ {reminder.value.toFixed(2)}</p>
+              <ReminderCard>
+                <ReminderIcon src={card} />
+                <div>
+                  <ReminderTitle>{reminder.name}</ReminderTitle>
+                  <ReminderDate>Dia {new Date(reminder.date).toLocaleDateString()}</ReminderDate>
+                </div>
+                <ReminderValue>R$ {reminder.value.toFixed(2)}</ReminderValue>
+              </ReminderCard>
             </RemindersItem>
           ))}
         </RemindersList>

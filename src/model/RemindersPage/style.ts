@@ -1,20 +1,27 @@
 import styled from 'styled-components';
+import card from '../../images/card.png';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
   background-color: #f5f5f5;
   min-height: 100vh;
+  padding: 1rem;
+`;
+
+export const Header = styled.div`
+  width: 500px;
+  background-color: #031A6E;
+  padding: 1rem;
+  text-align: left;
 `;
 
 export const AddRemindersContainer = styled.div`
+  width: 600px;
   background-color: #031A6E;
-  padding: 2rem;
-  margin-top: -50px;
+  padding: 1rem;
   border-radius: 0.25rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -28,76 +35,83 @@ export const Info = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const ReminderH1 = styled.p`
+export const ReminderH1 = styled.h1`
   font-size: 1rem;
   color: #fff;
-  margin-top: 0.25rem;
+  margin: 0;
 `;
 
-export const ReminderH2 = styled.p`
-  font-size: 1.8rem;
-  color: #fff;
-  margin-top: 0.25rem;
-  margin-right: 1rem;
-`;
-
-export const Button = styled.button`
-  padding: 0.5rem 1rem;
+export const ReminderH2 = styled.h2`
   font-size: 1.2rem;
-  background-color: #4E5E97;
   color: #fff;
-  border: none;
+  margin: 0;
+`;
+
+export const AddButton = styled.button`
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   cursor: pointer;
 
   &:hover {
-    background-color: #919DC4;
+    background-color: #fff;
+    color: #031A6E;
   }
 `;
 
 export const RemindersContainer = styled.div`
+  width: 600px;
   background-color: #fff;
-  padding: 2rem;
   border-radius: 0.25rem;
+  padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 `;
 
 export const RemindersList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  width: 100%;
 `;
 
 export const RemindersItem = styled.li`
-  padding: 1rem;
-  border-bottom: 1px solid #ddd;
   width: 100%;
+  padding: 0.5rem 0;
+`;
+
+export const ReminderCard = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  p {
-    margin: 0;
-    margin-bottom: 0.5rem;
-  }
+  padding: 0.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
-export const IFrame = styled.iframe`
-background: #F1F5F4;
-border: none;border-radius: 2px;
-box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
-width: 100vw;
-height: 100vh;
+export const ReminderIcon = styled.img`
+  margin-right: -20rem;
+`;
+
+export const ReminderTitle = styled.h3`
+  font-size: 1rem;
+  margin: 0;
+  color: #333;
+`;
+
+export const ReminderDate = styled.p`
+  font-size: 0.875rem;
+  margin: 0;
+  color: #666;
+`;
+
+export const ReminderValue = styled.p`
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+  color: #031A6E;
 `;

@@ -11,13 +11,13 @@ export const Wrapper = styled.div`
 
 export const GraphicContainer = styled.div`
   background-color: #031A6E;
-  padding: 5rem;
-  margin-top: -50px;
+  padding: 2rem;
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 500px;
 `;
 
 export const Info = styled.div`
@@ -28,17 +28,16 @@ export const Info = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const GraphicH1 = styled.p`
-  font-size: 1rem;
+export const GraphicH1 = styled.h1`
+  font-size: 1.5rem;
   color: #fff;
   margin-top: 0.25rem;
 `;
 
-export const GraphicH2 = styled.p`
+export const GraphicH2 = styled.h2`
   font-size: 1.8rem;
-  color: #fff;
-  margin-top: 0.25rem;
-  margin-right: 1rem;
+  color: #333;
+  margin-top: 1rem;
 `;
 
 export const Button = styled.button`
@@ -56,11 +55,43 @@ export const Button = styled.button`
 `;
 
 export const IFrame = styled.iframe`
-background: #F1F5F4;
-align-items: center;
-border: none;
-border-radius: 2px;
-box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
-width: 32vw;
-height: 99vh;
+  background: #F1F5F4;
+  align-items: center;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
+  width: 50%;
+  height: 50vh;
+  margin-top: 2rem;
+`;
+
+export const IncomeExpenseContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const IncomeExpenseItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #031A6E;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  width: 100%;
+`;
+
+export const IncomeExpenseValue = styled.p`
+  font-size: 1.5rem;
+  color: #34AA44;
+`;
+
+export const IncomeExpenseArrow = styled.span`
+  font-size: 1.2rem;
+  color: #34AA44;
+`;
+
+export const IncomeExpensePercentage = styled.p`
+  font-size: 1rem;
+  color: #fff;
 `;

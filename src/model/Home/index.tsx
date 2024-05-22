@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import transfer from '../../images/transfer.png';
 import {
   Wrapper,
   Title,
@@ -18,9 +19,11 @@ import {
   ExpensesContainer,
   ExpensesList,
   ExpensesItem,
-  LogoutButton
+  LogoutButton,
+  ExpensesIcon
 } from './style';
 import Add from '../../images/add.png';
+import userEvent from '@testing-library/user-event';
 
 interface UserData {
   balance: number;
@@ -179,7 +182,7 @@ const Home: React.FC = () => {
 
   return (
     <Wrapper>
-      <Title>Bem-vindo, João Victor!</Title>
+      <Title>Bem-vindo, Usuário!</Title>
       <BalanceContainer>
         {balance !== null && (
           <Info>
@@ -194,27 +197,27 @@ const Home: React.FC = () => {
         <ExpensesSection>
           <MonthlyExpenses>Gastos esse mês:<br /> <MonthlyExpensesColor>R$ -{totalExpenses?.toFixed(2)}</MonthlyExpensesColor></MonthlyExpenses>
           {goal !== null && (
-            <GoalExpenses>Meta de gastos:<br /> <BalanceColor>R$ {goal.amount}</BalanceColor></GoalExpenses>
+            <GoalExpenses>Meta de gastos:<br /> R$ {goal.amount}</GoalExpenses>
           )}
         </ExpensesSection>
       </BalanceContainer>
-
-      <ExpensesContainer>
-        <ExpensesTitle>Despesas recentes
+      <ExpensesTitle>Despesas recentes
           <Link to="/addExpense">
             <ExpensesButton>
               <img src={Add} alt="Add Expense" />
             </ExpensesButton>
           </Link>
         </ExpensesTitle>
+      <ExpensesContainer>
         <ExpensesList>
           {expenses.map(expense => (
             <ExpensesItem key={expense._id}>
+              <ExpensesIcon src={transfer} />
               <div>
                 <p>Descrição: {expense.name}</p>
                 <p>Categoria: {expense.type}</p>
               </div>
-              <p>Valor: <MonthlyExpensesColor>R$ -{expense.value}</MonthlyExpensesColor></p>
+              <p><MonthlyExpensesColor>R$ -{expense.value}</MonthlyExpensesColor></p>
             </ExpensesItem>
           ))}
         </ExpensesList>
