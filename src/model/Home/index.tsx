@@ -23,7 +23,6 @@ import {
   ExpensesIcon
 } from './style';
 import Add from '../../images/add.png';
-import userEvent from '@testing-library/user-event';
 
 interface UserData {
   balance: number;
@@ -34,6 +33,7 @@ interface ExpenseData {
   name: string;
   type: string;
   value: number;
+  date: string;
 }
 
 interface GoalData {
@@ -52,7 +52,6 @@ const Home: React.FC = () => {
     fetchUserExpenses();
     fetchTotalExpenses();
     fetchUserGoal();
-    checkData();
   }, []);
 
   const fetchUserData = async () => {
@@ -144,40 +143,9 @@ const Home: React.FC = () => {
     navigate('/login');
   };
 
-  const checkData = () => {
-    const currentDate = new Date();
-    const currentDay = currentDate.getDate();
-    const currentMonth = currentDate.getMonth() + 1; // Os meses começam do zero, então somamos 1
-    if (currentDay === 1) {
-      clearExpensesAndGoals();
-    }
-  };
-
-  const clearExpensesAndGoals = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('Token não encontrado.');
-      }
-
-      await axios.delete('http://localhost:3001/expense', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      await axios.delete('http://localhost:3001/goal', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setTotalExpenses(0);
-      setExpenses([]);
-      setGoal(null);
-    } catch (error) {
-      console.error('Erro ao limpar os dados.', error);
-    }
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   return (
@@ -217,7 +185,10 @@ const Home: React.FC = () => {
                 <p>Descrição: {expense.name}</p>
                 <p>Categoria: {expense.type}</p>
               </div>
+              <div>
+              <p>Data: {formatDate(expense.date)}</p>
               <p><MonthlyExpensesColor>R$ -{expense.value}</MonthlyExpensesColor></p>
+              </div>
             </ExpensesItem>
           ))}
         </ExpensesList>

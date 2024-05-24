@@ -124,7 +124,7 @@ export const ExpensesList = styled.ul`
 `;
 
 export const ExpensesIcon = styled.img`
-  margin-right: -10rem;
+  margin-right: -5rem;
 `;
 
 export const ExpensesItem = styled.li`
