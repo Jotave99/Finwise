@@ -5,6 +5,7 @@ import { Wrapper, GraphicContainer, Info, Button, GraphicH1, GraphicH2, IFrame, 
 
 const GraphicPage: React.FC = () => {
   const [userId, setUserId] = useState<string>('');
+  const [goalDifference, setGoalDifference] = useState<number | null>(null);
 
   const fetchUserId = () => {
     const token = localStorage.getItem('token');
@@ -15,8 +16,28 @@ const GraphicPage: React.FC = () => {
     }
   };
 
+  const fetchGoalDifference = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token não encontrado.');
+      }
+
+      const response = await axios.get<{ goalDifference: number }>('http://localhost:3001/goalDifference', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setGoalDifference(response.data.goalDifference);
+    } catch (error) {
+      console.error('Erro ao buscar a diferença da meta de gastos.', error);
+    }
+  };
+
   useEffect(() => {
     fetchUserId();
+    fetchGoalDifference();
   }, []);
 
   return (
@@ -24,14 +45,8 @@ const GraphicPage: React.FC = () => {
       <GraphicContainer>
         <IncomeExpenseContainer>
           <IncomeExpenseItem>
-            <GraphicH1>Renda desse mês:</GraphicH1>
-            <IncomeExpenseValue>R$ +140,00</IncomeExpenseValue>
-            <IncomeExpensePercentage><IncomeExpenseArrow>⬆</IncomeExpenseArrow> Aumento de 4% em relação ao mês passado</IncomeExpensePercentage>
-          </IncomeExpenseItem>
-          <IncomeExpenseItem>
-            <GraphicH1>Despesas desse mês:</GraphicH1>
-            <IncomeExpenseValue>R$ +140,00</IncomeExpenseValue>
-            <IncomeExpensePercentage><IncomeExpenseArrow>⬆</IncomeExpenseArrow> Gastou 2% a menos em relação ao mês passado</IncomeExpensePercentage>
+            <GraphicH1>Diferença entre Meta e Gastos:</GraphicH1>
+            <IncomeExpenseValue>R$ {goalDifference?.toFixed(2)}</IncomeExpenseValue>
           </IncomeExpenseItem>
         </IncomeExpenseContainer>
       </GraphicContainer>

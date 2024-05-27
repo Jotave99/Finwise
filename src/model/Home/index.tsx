@@ -2,26 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import transfer from '../../images/transfer.png';
-import {
-  Wrapper,
-  Title,
-  BalanceContainer,
-  Saldo,
-  BalanceColor,
-  Button,
-  Info,
-  ExpensesSection,
-  MonthlyExpenses,
-  MonthlyExpensesColor,
-  GoalExpenses,
-  ExpensesTitle,
-  ExpensesButton,
-  ExpensesContainer,
-  ExpensesList,
-  ExpensesItem,
-  LogoutButton,
-  ExpensesIcon
-} from './style';
+import { Wrapper, Title, BalanceContainer, Saldo, BalanceColor, Button, Info, ExpensesSection, MonthlyExpenses, MonthlyExpensesColor, GoalExpenses, ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, ExpensesItem, LogoutButton, ExpensesIcon } from './style';
 import Add from '../../images/add.png';
 
 interface UserData {
@@ -48,11 +29,42 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    checkAndResetMonthlyData();
     fetchUserData();
     fetchUserExpenses();
     fetchTotalExpenses();
     fetchUserGoal();
   }, []);
+
+  const checkAndResetMonthlyData = async () => {
+    const now = new Date();
+    const lastReset = localStorage.getItem('lastReset');
+    if (!lastReset || new Date(lastReset).getMonth() !== now.getMonth() || new Date(lastReset).getFullYear() !== now.getFullYear()) {
+      await resetMonthlyData();
+      localStorage.setItem('lastReset', now.toISOString());
+    }
+  };
+
+  const resetMonthlyData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token não encontrado.');
+      }
+
+      await axios.post('http://localhost:3001/resetMonthlyData', {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setTotalExpenses(0);
+      setGoal({ amount: 0 });
+      setExpenses([]);
+    } catch (error) {
+      console.error('Erro ao resetar os dados mensais.', error);
+    }
+  };
 
   const fetchUserData = async () => {
     try {
@@ -80,7 +92,7 @@ const Home: React.FC = () => {
         throw new Error('Token não encontrado.');
       }
 
-      const response = await axios.get<{expenses: ExpenseData[]}>('http://localhost:3001/expense', {
+      const response = await axios.get<{ expenses: ExpenseData[] }>('http://localhost:3001/expense', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -148,6 +160,14 @@ const Home: React.FC = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const isCurrentMonth = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+  };
+
+  const currentMonthExpenses = expenses.filter(expense => isCurrentMonth(expense.date));
+
   return (
     <Wrapper>
       <Title>Bem-vindo, Usuário!</Title>
@@ -178,7 +198,7 @@ const Home: React.FC = () => {
         </ExpensesTitle>
       <ExpensesContainer>
         <ExpensesList>
-          {expenses.map(expense => (
+          {currentMonthExpenses.map(expense => (
             <ExpensesItem key={expense._id}>
               <ExpensesIcon src={transfer} />
               <div>
@@ -186,8 +206,8 @@ const Home: React.FC = () => {
                 <p>Categoria: {expense.type}</p>
               </div>
               <div>
-              <p>Data: {formatDate(expense.date)}</p>
-              <p><MonthlyExpensesColor>R$ -{expense.value}</MonthlyExpensesColor></p>
+                <p>Data: {formatDate(expense.date)}</p>
+                <p><MonthlyExpensesColor>R$ -{expense.value}</MonthlyExpensesColor></p>
               </div>
             </ExpensesItem>
           ))}
