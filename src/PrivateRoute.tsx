@@ -1,19 +1,16 @@
 import React from 'react';
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
-interface PrivateRouteProps {
-  path: string;
-  element: React.ReactNode;
-}
+const useAuth = () => {
+  const token = localStorage.getItem('token');
+  return token !== null;
+  
+};
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ path, element }) => {
-  const isAuthenticated = !!localStorage.getItem('token');
+const PrivateRoute: React.FC = () => {
+  const isAuth = useAuth();
 
-  return isAuthenticated ? (
-    <Route path={path} element={element} />
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  return isAuth ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

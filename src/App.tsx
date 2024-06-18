@@ -9,14 +9,17 @@ import AddGoal from './model/AddGoal';
 import RemindersPage from './model/RemindersPage';
 import AddReminder from './model/AddReminder';
 import GraphicPage from './model/GraphicPage';
+import PrivateRoute from './PrivateRoute';
 
 const App: React.FC = () => {
   return (
     <Router>
-        <Routes>
-          <Route path="/"  element={<Navigate to="/login" />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+
+        <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Home />} />
           <Route path="/addBalance" element={<AddBalance />} />
           <Route path="/addExpense" element={<AddExpense />} />
@@ -24,7 +27,8 @@ const App: React.FC = () => {
           <Route path="/remindersPage" element={<RemindersPage />} />
           <Route path="/addReminder" element={<AddReminder />} />
           <Route path="/graphicPage" element={<GraphicPage />} />
-        </Routes>
+        </Route>
+      </Routes>
     </Router>
   );
 };
