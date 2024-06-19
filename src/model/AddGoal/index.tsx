@@ -21,13 +21,19 @@ const AddGoal: React.FC = () => {
         console.error('Token não encontrado');
         return;
       }
-
-      const response = await axios.post('http://localhost:3001/goal', { amount: parseFloat(amount) }, {
+  
+      const amountNumber = parseFloat(amount);
+      if (isNaN(amountNumber)) {
+        setError('Por favor, insira um valor numérico válido.');
+        return;
+      }
+  
+      const response = await axios.post('http://localhost:3001/goal', { amount: amountNumber }, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-
+  
       console.log(response.data);
       navigate("/home");
       
@@ -35,7 +41,7 @@ const AddGoal: React.FC = () => {
       console.error('Erro ao adicionar a meta:', error);
       setError('Formato incorreto.');
     }
-  };
+  };  
 
   return (
     <Container>

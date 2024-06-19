@@ -140,6 +140,8 @@ const Home: React.FC = () => {
         },
       });
 
+      console.log('Meta de gastos recebida no frontend:', response.data.goal);
+
       if (response.data.goal) {
         setGoal(response.data.goal);
       } else {
@@ -207,7 +209,7 @@ const Home: React.FC = () => {
               </div>
               <div>
                 <p>Data: {formatDate(expense.date)}</p>
-                <p><MonthlyExpensesColor>R$ -{expense.value}</MonthlyExpensesColor></p>
+                <p><MonthlyExpensesColor>R$ -{expense.value.toFixed(2)}</MonthlyExpensesColor></p>
               </div>
             </ExpensesItem>
           ))}
