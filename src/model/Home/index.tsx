@@ -4,6 +4,7 @@ import axios from 'axios';
 import transfer from '../../images/transfer.png';
 import { Wrapper, Title, BalanceContainer, Saldo, BalanceColor, Button, Info, ExpensesSection, MonthlyExpenses, MonthlyExpensesColor, GoalExpenses, ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, ExpensesItem, LogoutButton, ExpensesIcon } from './style';
 import Add from '../../images/add.png';
+import moment from 'moment';
 
 interface UserData {
   balance: number;
@@ -26,15 +27,16 @@ const Home: React.FC = () => {
   const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
   const [goal, setGoal] = useState<GoalData | null>(null);
+  const [currentMonth, setCurrentMonth] = useState(moment().format('YYYY-MM'));
   const navigate = useNavigate();
 
   useEffect(() => {
     checkAndResetMonthlyData();
     fetchUserData();
-    fetchUserExpenses();
+    fetchUserExpenses(currentMonth);
     fetchTotalExpenses();
     fetchUserGoal();
-  }, []);
+  }, [currentMonth]);
 
   const checkAndResetMonthlyData = async () => {
     const now = new Date();
@@ -85,14 +87,16 @@ const Home: React.FC = () => {
     }
   };
 
-  const fetchUserExpenses = async () => {
+  const fetchUserExpenses = async (month: string) => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
         throw new Error('Token não encontrado.');
       }
 
-      const response = await axios.get<{ expenses: ExpenseData[] }>('http://localhost:3001/expense', {
+      const [year, monthNum] = month.split('-');
+
+      const response = await axios.get<{ expenses: ExpenseData[] }>(`http://localhost:3001/expense/${year}/${monthNum}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -140,8 +144,6 @@ const Home: React.FC = () => {
         },
       });
 
-      console.log('Meta de gastos recebida no frontend:', response.data.goal);
-
       if (response.data.goal) {
         setGoal(response.data.goal);
       } else {
@@ -157,18 +159,16 @@ const Home: React.FC = () => {
     navigate('/login');
   };
 
+  const handleMonthChange = (delta: number) => {
+    setCurrentMonth(moment(currentMonth).add(delta, 'months').format('YYYY-MM'));
+  };
+
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  const isCurrentMonth = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
-  };
-
-  const currentMonthExpenses = expenses.filter(expense => isCurrentMonth(expense.date));
+  const currentMonthExpenses = expenses;
 
   return (
     <Wrapper>
@@ -198,6 +198,11 @@ const Home: React.FC = () => {
             </ExpensesButton>
           </Link>
         </ExpensesTitle>
+      <ExpensesTitle>
+        Despesas de {moment(currentMonth).format('MMMM YYYY')}
+          <LogoutButton onClick={() => handleMonthChange(-1)}>&lt;</LogoutButton>
+          <LogoutButton onClick={() => handleMonthChange(1)}>&gt;</LogoutButton>
+      </ExpensesTitle>
       <ExpensesContainer>
         <ExpensesList>
           {currentMonthExpenses.map(expense => (
