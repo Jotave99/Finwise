@@ -20,14 +20,6 @@ export const GraphicContainer = styled.div`
   width: 500px;
 `;
 
-export const Info = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 1rem;
-`;
-
 export const GraphicH1 = styled.h1`
   font-size: 1.5rem;
   color: #fff;
@@ -81,17 +73,21 @@ export const IncomeExpenseItem = styled.div`
   width: 100%;
 `;
 
-export const IncomeExpenseValue = styled.p`
-  font-size: 1.5rem;
-  color: #34AA44;
+interface IncomeExpenseValueProps {
+  isPositive: boolean;
+}
+
+export const IncomeExpenseValue = styled.p<IncomeExpenseValueProps>`
+  font-size: 1.75rem;
+  color: ${props => (props.isPositive ? '#34AA44' : '#FF0000')};
 `;
 
-export const IncomeExpenseArrow = styled.span`
-  font-size: 1.2rem;
-  color: #34AA44;
-`;
+interface IncomeExpenseMessageProps {
+  isPositive: boolean;
+}
 
-export const IncomeExpensePercentage = styled.p`
-  font-size: 1rem;
+export const IncomeExpenseMessage = styled.p<IncomeExpenseMessageProps>`
+  font-size: 1.25rem;
   color: #fff;
+  margin-top: 0.5rem;
 `;
