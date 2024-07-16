@@ -23,8 +23,8 @@ export const Title = styled.h2`
 `;
 
 export const Text = styled.p`
-    color: #808080;
-    margin-top: 1rem;
+  color: #808080;
+  margin-top: 1rem;
 `;
 
 export const Form = styled.form`
@@ -53,7 +53,6 @@ export const Button = styled.button`
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
-  margin-top: 200px;
 
   &:hover {
     background-color: #0056b3;

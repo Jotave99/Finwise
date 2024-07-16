@@ -2,18 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import transfer from '../../images/transfer.png';
-import { Wrapper, Title, BalanceContainer, Saldo, BalanceColor, Button, Info, ExpensesSection, MonthlyExpenses, MonthlyExpensesColor, GoalExpenses, ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, ExpensesItem, LogoutButton, ExpensesIcon } from './style';
+import receita from '../../images/receipt.png';
+import { Wrapper, Title, BalanceContainer, Saldo, BalanceColor, Button, Info, ExpensesSection, MonthlyExpenses, MonthlyExpensesColor, GoalExpenses, ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, ExpensesItem, LogoutButton, ExpensesIcon, ReceiptsItem, ReceiptsColor } from './style';
 import Add from '../../images/add.png';
 import moment from 'moment';
 
 interface UserData {
   balance: number;
+  receipts: ReceiptData[];
 }
 
 interface ExpenseData {
   _id: string;
   name: string;
   type: string;
+  value: number;
+  date: string;
+}
+
+interface ReceiptData {
+  _id: string;
+  name: string;
+  category: string;
   value: number;
   date: string;
 }
@@ -26,6 +36,7 @@ const Home: React.FC = () => {
   const [balance, setBalance] = useState<number | null>(null);
   const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
+  const [receipts, setReceipts] = useState<ReceiptData[]>([]);
   const [goal, setGoal] = useState<GoalData | null>(null);
   const [currentMonth, setCurrentMonth] = useState(moment().format('YYYY-MM'));
   const navigate = useNavigate();
@@ -82,6 +93,7 @@ const Home: React.FC = () => {
       });
 
       setBalance(response.data.balance);
+      setReceipts(response.data.receipts || []);
     } catch (error) {
       console.error('Erro ao buscar o saldo do usuário.', error);
     }
@@ -169,6 +181,7 @@ const Home: React.FC = () => {
   };
 
   const currentMonthExpenses = expenses;
+  const currentMonthReceipts = Array.isArray(receipts) ? receipts.filter(receipt => moment(receipt.date).format('YYYY-MM') === currentMonth) : [];
 
   return (
     <Wrapper>
@@ -191,15 +204,15 @@ const Home: React.FC = () => {
           )}
         </ExpensesSection>
       </BalanceContainer>
-      <ExpensesTitle>Despesas recentes
-          <Link to="/addExpense">
+      <ExpensesTitle>
+        Adicionar despesas<Link to="/addExpense">
             <ExpensesButton>
               <img src={Add} alt="Add Expense" />
             </ExpensesButton>
           </Link>
         </ExpensesTitle>
       <ExpensesTitle>
-        Despesas de {moment(currentMonth).format('MMMM YYYY')}
+        Registros de {moment(currentMonth).format('MMMM YYYY')}
           <LogoutButton onClick={() => handleMonthChange(-1)}>&lt;</LogoutButton>
           <LogoutButton onClick={() => handleMonthChange(1)}>&gt;</LogoutButton>
       </ExpensesTitle>
@@ -217,6 +230,19 @@ const Home: React.FC = () => {
                 <p><MonthlyExpensesColor>R$ -{expense.value.toFixed(2)}</MonthlyExpensesColor></p>
               </div>
             </ExpensesItem>
+          ))}
+          {currentMonthReceipts.map(receipt => (
+            <ReceiptsItem key={receipt._id}>
+              <ExpensesIcon src={receita} />
+              <div>
+                <p>Descrição: {receipt.name}</p>
+                <p>Categoria: {receipt.category}</p>
+              </div>
+              <div>
+                <p>Data: {formatDate(receipt.date)}</p>
+                <p><ReceiptsColor>R$ +{receipt.value.toFixed(2)}</ReceiptsColor></p>
+              </div>
+            </ReceiptsItem>
           ))}
         </ExpensesList>
       </ExpensesContainer>

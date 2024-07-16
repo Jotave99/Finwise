@@ -151,3 +151,12 @@ export const ExpensesItem = styled.li`
 export const LogoutButton = styled(Button)`
   margin-top: 2rem;
 `;
+
+export const ReceiptsItem = styled(ExpensesItem)`
+  background-color: #fff;
+`;
+
+export const ReceiptsColor = styled.span`
+  color: #34AA44;
+  font-size: 1.7rem;
+`;
