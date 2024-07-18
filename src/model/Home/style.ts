@@ -160,3 +160,24 @@ export const ReceiptsColor = styled.span`
   color: #34AA44;
   font-size: 1.7rem;
 `;
+
+export const NotificationButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+export const NotificationContainer = styled.div`
+  background-color: #fff;
+  color: #031A6E;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+`;

@@ -3,7 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import transfer from '../../images/transfer.png';
 import receita from '../../images/receipt.png';
-import { Wrapper, Title, BalanceContainer, Saldo, BalanceColor, Button, Info, ExpensesSection, MonthlyExpenses, MonthlyExpensesColor, GoalExpenses, ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, ExpensesItem, LogoutButton, ExpensesIcon, ReceiptsItem, ReceiptsColor } from './style';
+import bell from '../../images/bell.png';
+import bellNotification from '../../images/bell-notification.png';
+import { 
+  Wrapper, Title, BalanceContainer, Saldo, BalanceColor, Button, Info, 
+  ExpensesSection, MonthlyExpenses, MonthlyExpensesColor, GoalExpenses, 
+  ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, 
+  ExpensesItem, LogoutButton, ExpensesIcon, ReceiptsItem, ReceiptsColor, 
+  NotificationButton, NotificationContainer 
+} from './style';
 import Add from '../../images/add.png';
 import moment from 'moment';
 
@@ -32,6 +40,13 @@ interface GoalData {
   amount: number;
 }
 
+interface ReminderData {
+  _id: string;
+  name: string;
+  date: Date;
+  value: number;
+}
+
 const Home: React.FC = () => {
   const [balance, setBalance] = useState<number | null>(null);
   const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
@@ -39,6 +54,10 @@ const Home: React.FC = () => {
   const [receipts, setReceipts] = useState<ReceiptData[]>([]);
   const [goal, setGoal] = useState<GoalData | null>(null);
   const [currentMonth, setCurrentMonth] = useState(moment().format('YYYY-MM'));
+  const [reminders, setReminders] = useState<ReminderData[]>([]);
+  const [notifications, setNotifications] = useState<string[]>([]);
+  const [showNotifications, setShowNotifications] = useState<boolean>(false);
+  const [bellImage, setBellImage] = useState<string>(bell);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,7 +66,12 @@ const Home: React.FC = () => {
     fetchUserExpenses(currentMonth);
     fetchTotalExpenses();
     fetchUserGoal();
+    fetchUserReminders();
   }, [currentMonth]);
+
+  useEffect(() => {
+    checkReminders();
+  }, [reminders]);
 
   const checkAndResetMonthlyData = async () => {
     const now = new Date();
@@ -166,6 +190,43 @@ const Home: React.FC = () => {
     }
   };
 
+  const fetchUserReminders = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token não encontrado.');
+      }
+
+      const response = await axios.get<{ reminder: ReminderData[] }>('http://localhost:3001/reminder', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setReminders(response.data.reminder);
+    } catch (error) {
+      console.error('Erro ao buscar os lembretes do usuário.', error);
+    }
+  };
+
+  const checkReminders = () => {
+    const today = moment().startOf('day');
+    const newNotifications: string[] = reminders
+      .filter(reminder => moment(reminder.date).isSame(today, 'day'))
+      .map(reminder => `O dia de pagar ${reminder.name} chegou, não se esqueça!`);
+
+    if (newNotifications.length > 0) {
+      setBellImage(bellNotification);
+    }
+
+    setNotifications(newNotifications);
+  };
+
+  const handleNotificationClick = () => {
+    setShowNotifications(!showNotifications);
+    setBellImage(bell);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -185,7 +246,19 @@ const Home: React.FC = () => {
 
   return (
     <Wrapper>
-      <Title>Bem-vindo, Usuário!</Title>
+      <Title>
+        Bem-vindo, Usuário!
+        <NotificationButton onClick={handleNotificationClick}>
+          <img src={bellImage} alt="Notificações" />
+        </NotificationButton>
+      </Title>
+      {showNotifications && notifications.length > 0 && (
+        <NotificationContainer>
+          {notifications.map((notification, index) => (
+            <p key={index}>{notification}</p>
+          ))}
+        </NotificationContainer>
+      )}
       <BalanceContainer>
         {balance !== null && (
           <Info>
