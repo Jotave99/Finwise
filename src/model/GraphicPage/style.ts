@@ -7,6 +7,10 @@ export const Wrapper = styled.div`
   padding: 2rem;
   background-color: #f5f5f5;
   min-height: 100vh;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 export const GraphicContainer = styled.div`
@@ -17,7 +21,8 @@ export const GraphicContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
 `;
 
 export const GraphicH1 = styled.h1`
@@ -52,9 +57,13 @@ export const IFrame = styled.iframe`
   border: none;
   border-radius: 2px;
   box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);
-  width: 50%;
+  width: 100%;
   height: 50vh;
   margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    height: 40vh;
+  }
 `;
 
 export const IncomeExpenseContainer = styled.div`
@@ -90,4 +99,35 @@ export const IncomeExpenseMessage = styled.p<IncomeExpenseMessageProps>`
   font-size: 1.25rem;
   color: #fff;
   margin-top: 0.5rem;
+`;
+
+export const GraphicsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+`;
+
+export const GraphicsRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const GraphicsItem = styled.div`
+  flex: 1;
+  min-width: 300px;
+  max-width: 50%;
+  padding: 0.5rem;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;

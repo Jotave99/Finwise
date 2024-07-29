@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Seta from '../../images/seta.png'
+import moment from 'moment';
+import Seta from '../../images/seta.png';
 import { Button, Container, ErrorMessage, Form, FormContainer, Input, Text, Title } from './style';
 
 const AddReminder: React.FC = () => {
@@ -31,9 +32,12 @@ const AddReminder: React.FC = () => {
         throw new Error('Token não encontrado.');
       }
 
+      // Corrigir a data para o início do dia no horário local
+      const localDate = moment(date).startOf('day').toDate();
+
       await axios.post(
         'http://localhost:3001/reminder',
-        { name, date, value },
+        { name, date: localDate, value },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,23 +56,21 @@ const AddReminder: React.FC = () => {
     <Container>
       <FormContainer>
         <Link to="/remindersPage">
-          <img src={Seta} />
+          <img src={Seta} alt="Voltar" />
         </Link>
         <Title>Adicionar Lembrete</Title>
         <Form onSubmit={handleSubmit}>
-            <Text>Nome:</Text>
-            <Input type="text" value={name} onChange={handleNameChange} />
-            <Text>Data:</Text>
-            <Input type="date" value={date} onChange={handleDateChange} />
-            <Text>Valor:</Text>
-            <Input type="number" value={value} onChange={handleValueChange} />
+          <Text>Nome:</Text>
+          <Input type="text" value={name} onChange={handleNameChange} />
+          <Text>Data:</Text>
+          <Input type="date" value={date} onChange={handleDateChange} />
+          <Text>Valor:</Text>
+          <Input type="number" value={value} onChange={handleValueChange} />
           <Button type="submit">Adicionar Lembrete</Button>
           {error && <ErrorMessage>{error}</ErrorMessage>}
         </Form>
       </FormContainer>
     </Container>
-
-    
   );
 };
 
