@@ -68,6 +68,26 @@ export const Input = styled.input`
   }
 `;
 
+export const Select = styled.select`
+  height: 40px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #333;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 2px 1px #007bff;
+  }
+`;
+
+export const Option = styled.option`
+  font-size: 14px;
+  color: #333;
+`;
+
 export const Button = styled.button`
   padding: 0.5rem 1rem;
   font-size: 1rem;

@@ -68,6 +68,21 @@ export const Input = styled.input`
   }
 `;
 
+export const Select = styled.select`
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 2px 1px #007bff;
+  }
+`;
+
+export const Option = styled.option``;
+
 export const Button = styled.button`
   padding: 0.5rem 1rem;
   font-size: 1rem;

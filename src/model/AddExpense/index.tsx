@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Seta from '../../images/seta.png';
-import { Container, FormContainer, Title, Text, Form, Input, Button, ErrorMessage } from './style';
+import { Container, FormContainer, Title, Text, Form, Input, Select, Option, Button, ErrorMessage } from './style';
 
 const AddExpense: React.FC = () => {
   const [name, setName] = useState('');
@@ -16,7 +16,7 @@ const AddExpense: React.FC = () => {
     setName(event.target.value);
   };
 
-  const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setType(event.target.value);
   };
 
@@ -47,7 +47,7 @@ const AddExpense: React.FC = () => {
       navigate('/home');
     } catch (error) {
       console.error('Erro ao adicionar despesa.', error);
-      setError('Dados invalidos.');
+      setError('Dados inválidos.');
     }
   };
 
@@ -55,15 +55,23 @@ const AddExpense: React.FC = () => {
     <Container>
       <FormContainer>
         <Link to="/home">
-          <img src={Seta} />
+          <img src={Seta} alt="Voltar" />
         </Link>
         <Title>Adicione uma Despesa:</Title>
         <Text>Pode ser tanto um gasto, quanto um recebimento.</Text>
         <Form onSubmit={handleSubmit}>
           <Text>Nome</Text>
           <Input type="text" placeholder="EX: recebeu um pix ou enviou" value={name} onChange={handleNameChange} />
-          <Text>Tipo</Text>
-          <Input type="text" value={type} onChange={handleTypeChange} />
+          <Text>Categoria</Text>
+          <Select value={type} onChange={handleTypeChange}>
+            <Option value="">Selecione uma categoria</Option>
+            <Option value="Alimentação">Alimentação</Option>
+            <Option value="Gastos Pessoais">Gastos Pessoais</Option>
+            <Option value="Transporte">Transporte</Option>
+            <Option value="Moradia">Moradia</Option>
+            <Option value="Entretenimento">Entretenimento</Option>
+            <Option value="Outros">Outros</Option>
+          </Select>
           <Text>Data</Text>
           <Input type="date" value={date} onChange={handleDateChange} />
           <Text>Valor</Text>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Seta from '../../images/seta.png';
-import { Container, FormContainer, Title, Text, Form, Input, Button, ErrorMessage } from './style';
+import { Container, FormContainer, Title, Text, Form, Input, Select, Option, Button, ErrorMessage } from './style';
 
 const AddBalance: React.FC = () => {
   const [name, setName] = useState('');
@@ -12,7 +12,7 @@ const AddBalance: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
     switch (name) {
       case 'name':
@@ -59,15 +59,19 @@ const AddBalance: React.FC = () => {
   return (
     <Container>
       <FormContainer>
-      <Link to="/home">
-          <img src={Seta} />
+        <Link to="/home">
+          <img src={Seta} alt="Voltar" />
         </Link>
         <Title>Adicione seu recebimento:</Title>
         <Form onSubmit={handleSubmit}>
           <Text>Nome</Text>
           <Input type="text" name="name" placeholder="Ex: O salário caiu na conta, etc." value={name} onChange={handleInputChange} />
           <Text>Categoria</Text>
-          <Input type="text" name="category" value={category} onChange={handleInputChange} />
+          <Select name="category" value={category} onChange={handleInputChange}>
+            <Option value="">Selecione uma categoria</Option>
+            <Option value="Salário">Salário</Option>
+            <Option value="Outros">Outros</Option>
+          </Select>
           <Text>Data</Text>
           <Input type="date" name="date" value={date} onChange={handleInputChange} />
           <Text>Valor</Text>
