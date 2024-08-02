@@ -4,8 +4,13 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 94vh;
   background-color: #f5f5f5;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    height: 100vh;
+  }
 `;
 
 export const FormContainer = styled.div`
@@ -16,25 +21,37 @@ export const FormContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    padding: 20px;
+  }
 `;
 
 export const Title = styled.h1`
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  margin-right: 215px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: #031A6E;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
 `;
 
 export const SubTitle = styled.h3`
   font-size: 14px;
   font-weight: bold;
   text-align: center;
-  margin: -25px;
-  margin-right: 100px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: #808080;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
 `;
 
 export const Form = styled.form`
@@ -55,6 +72,11 @@ export const Input = styled.input`
     outline: none;
     box-shadow: 0 0 2px 1px #007bff;
   }
+
+  @media (max-width: 768px) {
+    height: 35px;
+    font-size: 12px;
+  }
 `;
 
 export const Button = styled.button`
@@ -71,10 +93,19 @@ export const Button = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+
+  @media (max-width: 768px) {
+    height: 35px;
+    font-size: 12px;
+  }
 `;
 
 export const ErrorMessage = styled.div`
   color: red;
   font-size: 12px;
   margin-top: 5px;
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
