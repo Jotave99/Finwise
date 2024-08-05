@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import Menu from '../Menu';
 import { Wrapper, GraphicContainer, GraphicH1, GraphicH2, IFrame, IncomeExpenseContainer, IncomeExpenseItem, IncomeExpenseValue, IncomeExpenseMessage, GraphicsWrapper, GraphicsRow, GraphicsItem } from './style';
 
 const GraphicPage: React.FC = () => {
@@ -85,6 +86,7 @@ const GraphicPage: React.FC = () => {
           </GraphicsItem>
         </GraphicsRow>
       </GraphicsWrapper>
+      <Menu />
     </Wrapper>
   );
 };

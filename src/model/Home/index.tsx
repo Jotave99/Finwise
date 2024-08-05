@@ -14,6 +14,7 @@ import {
 } from './style';
 import Add from '../../images/add.png';
 import moment from 'moment';
+import Menu from '../Menu';
 
 interface UserData {
   balance: number;
@@ -227,11 +228,6 @@ const Home: React.FC = () => {
     setBellImage(bell);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
-
   const handleMonthChange = (delta: number) => {
     setCurrentMonth(moment(currentMonth).add(delta, 'months').format('YYYY-MM'));
   };
@@ -319,7 +315,8 @@ const Home: React.FC = () => {
           ))}
         </ExpensesList>
       </ExpensesContainer>
-      <LogoutButton onClick={handleLogout}>Sair</LogoutButton>
+      <br />
+      <Menu />
     </Wrapper>
   );
 };

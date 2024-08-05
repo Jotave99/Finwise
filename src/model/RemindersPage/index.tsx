@@ -8,6 +8,7 @@ import {
   ReminderDate, ReminderCard, ReminderIcon, MonthNavigation, NavigationButton 
 } from './style';
 import moment from 'moment';
+import Menu from '../Menu';
 
 interface ReminderData {
   _id: string;
@@ -101,6 +102,8 @@ const RemindersPage: React.FC = () => {
           ))}
         </RemindersList>
       </RemindersContainer>
+      <br />
+      <Menu />
     </Wrapper>
   );
 };
