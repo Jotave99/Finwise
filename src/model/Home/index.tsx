@@ -39,6 +39,7 @@ interface ReceiptData {
 
 interface GoalData {
   amount: number;
+  month: string;
 }
 
 interface ReminderData {
@@ -53,7 +54,7 @@ const Home: React.FC = () => {
   const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
   const [receipts, setReceipts] = useState<ReceiptData[]>([]);
-  const [goal, setGoal] = useState<GoalData | null>(null);
+  const [goal, setGoal] = useState<GoalData | null>({ amount: 0, month: moment().format('YYYY-MM') });
   const [currentMonth, setCurrentMonth] = useState(moment().format('YYYY-MM'));
   const [reminders, setReminders] = useState<ReminderData[]>([]);
   const [notifications, setNotifications] = useState<string[]>([]);
@@ -62,47 +63,16 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkAndResetMonthlyData();
     fetchUserData();
     fetchUserExpenses(currentMonth);
     fetchTotalExpenses();
-    fetchUserGoal();
+    checkGoalReset();
     fetchUserReminders();
   }, [currentMonth]);
 
   useEffect(() => {
     checkReminders();
   }, [reminders]);
-
-  const checkAndResetMonthlyData = async () => {
-    const now = new Date();
-    const lastReset = localStorage.getItem('lastReset');
-    if (!lastReset || new Date(lastReset).getMonth() !== now.getMonth() || new Date(lastReset).getFullYear() !== now.getFullYear()) {
-      await resetMonthlyData();
-      localStorage.setItem('lastReset', now.toISOString());
-    }
-  };
-
-  const resetMonthlyData = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('Token não encontrado.');
-      }
-
-      await axios.post('http://localhost:3001/resetMonthlyData', {}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setTotalExpenses(0);
-      setGoal({ amount: 0 });
-      setExpenses([]);
-    } catch (error) {
-      console.error('Erro ao resetar os dados mensais.', error);
-    }
-  };
 
   const fetchUserData = async () => {
     try {
@@ -168,28 +138,37 @@ const Home: React.FC = () => {
     }
   };
 
-  const fetchUserGoal = async () => {
+  const fetchUserGoal = async (month: string) => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
         throw new Error('Token não encontrado.');
       }
-
-      const response = await axios.get<{ goal: GoalData }>('http://localhost:3001/goal', {
+  
+      const response = await axios.get<{ goal: GoalData }>(`http://localhost:3001/goal`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      if (response.data.goal) {
-        setGoal(response.data.goal);
-      } else {
-        console.error('Meta de gastos não encontrada.');
-      }
+  
+      console.log('Resposta da API de meta de gastos:', response.data);
+      return response.data.goal;
     } catch (error) {
       console.error('Erro ao buscar a meta de gastos do usuário:', error);
+      return null;
     }
-  };
+  };     
+
+  const checkGoalReset = async () => {
+    const currentGoal = await fetchUserGoal(currentMonth);
+    console.log('Meta atual:', currentGoal);
+    
+    if (currentGoal) {
+      setGoal(currentGoal);
+    } else {
+      setGoal({ amount: 0, month: currentMonth });
+    }
+  };  
 
   const fetchUserReminders = async () => {
     try {

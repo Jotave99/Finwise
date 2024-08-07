@@ -21,32 +21,32 @@ const AddGoal: React.FC = () => {
         console.error('Token não encontrado');
         return;
       }
-  
+
       const amountNumber = parseFloat(amount);
       if (isNaN(amountNumber)) {
         setError('Por favor, insira um valor numérico válido.');
         return;
       }
-  
+
       const response = await axios.post('http://localhost:3001/goal', { amount: amountNumber }, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-  
+
       console.log(response.data);
-      navigate("/home");
-      
+
+      navigate("/home", { state: { newGoal: response.data.goal } });
     } catch (error) {
       console.error('Erro ao adicionar a meta:', error);
       setError('Formato incorreto.');
     }
-  };  
+  };
 
   return (
     <Container>
       <FormContainer>
-      <Link to="/home">
+        <Link to="/home">
           <img src={Seta} />
         </Link>
         <Title>Adicione sua meta:</Title>
