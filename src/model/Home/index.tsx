@@ -17,6 +17,7 @@ import moment from 'moment';
 import Menu from '../Menu';
 
 interface UserData {
+  name: string;
   balance: number;
   receipts: ReceiptData[];
 }
@@ -50,6 +51,7 @@ interface ReminderData {
 }
 
 const Home: React.FC = () => {
+  const [userName, setUserName] = useState<string | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
   const [totalExpenses, setTotalExpenses] = useState<number | null>(null);
   const [expenses, setExpenses] = useState<ExpenseData[]>([]);
@@ -89,6 +91,7 @@ const Home: React.FC = () => {
 
       setBalance(response.data.balance);
       setReceipts(response.data.receipts || []);
+      setUserName(response.data.name);
     } catch (error) {
       console.error('Erro ao buscar o saldo do usuário.', error);
     }
@@ -125,18 +128,20 @@ const Home: React.FC = () => {
       if (!token) {
         throw new Error('Token não encontrado.');
       }
-
-      const response = await axios.get<{ totalExpenses: number }>('http://localhost:3001/expense/total', {
+  
+      const [year, month] = currentMonth.split('-');
+  
+      const response = await axios.get<{ totalExpenses: number }>(`http://localhost:3001/expense/total/${year}/${month}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
       setTotalExpenses(response.data.totalExpenses);
     } catch (error) {
       console.error('Erro ao buscar o total das despesas do usuário.', error);
     }
-  };
+  }; 
 
   const fetchUserGoal = async (month: string) => {
     try {
@@ -222,7 +227,7 @@ const Home: React.FC = () => {
   return (
     <Wrapper>
       <Title>
-        Bem-vindo, Usuário!
+        Bem-vindo, {userName ? userName : 'Usuário'}
         <NotificationButton onClick={handleNotificationClick}>
           <img src={bellImage} alt="Notificações" />
         </NotificationButton>
