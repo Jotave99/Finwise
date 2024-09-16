@@ -167,6 +167,17 @@ export const ReminderTitle = styled.h3`
   }
 `;
 
+export const NoReminderMessage = styled.h3`
+  font-size: 1rem;
+  margin: 0;
+  color: #333;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
+`;
+
 export const ReminderDate = styled.p`
   font-size: 0.875rem;
   margin: 0;

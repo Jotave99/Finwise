@@ -5,7 +5,8 @@ import card from '../../images/card.png';
 import { 
   RemindersContainer, RemindersList, RemindersItem, Wrapper, AddRemindersContainer, 
   Info, ReminderH1, ReminderH2, ReminderH3, Header, AddButton, ReminderTitle, ReminderValue, 
-  ReminderDate, ReminderCard, ReminderIcon, MonthNavigation, NavigationButton 
+  ReminderDate, ReminderCard, ReminderIcon, MonthNavigation, NavigationButton, 
+  NoReminderMessage
 } from './style';
 import moment from 'moment';
 import Menu from '../Menu';
@@ -87,20 +88,24 @@ const RemindersPage: React.FC = () => {
         <NavigationButton onClick={() => handleMonthChange(1)}>&gt;</NavigationButton>
       </MonthNavigation>
       <RemindersContainer>
-        <RemindersList>
-          {currentMonthReminders.map((reminder) => (
-            <RemindersItem key={reminder._id}>
-              <ReminderCard>
-                <ReminderIcon src={card} />
-                <div>
-                  <ReminderTitle>{reminder.name}</ReminderTitle>
-                  <ReminderDate>Dia {formatDate(reminder.date)}</ReminderDate>
-                </div>
-                <ReminderValue>R$ {reminder.value.toFixed(2)}</ReminderValue>
-              </ReminderCard>
-            </RemindersItem>
-          ))}
-        </RemindersList>
+        {currentMonthReminders.length === 0 ? (
+          <NoReminderMessage>Ainda não tem lembretes cadastrados.</NoReminderMessage>
+        ) : (
+          <RemindersList>
+            {currentMonthReminders.map((reminder) => (
+              <RemindersItem key={reminder._id}>
+                <ReminderCard>
+                  <ReminderIcon src={card} />
+                  <div>
+                    <ReminderTitle>{reminder.name}</ReminderTitle>
+                    <ReminderDate>Dia {formatDate(reminder.date)}</ReminderDate>
+                  </div>
+                  <ReminderValue>R$ {reminder.value.toFixed(2)}</ReminderValue>
+                </ReminderCard>
+              </RemindersItem>
+            ))}
+          </RemindersList>
+        )}
       </RemindersContainer>
       <br />
       <Menu />

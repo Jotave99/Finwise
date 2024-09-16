@@ -218,6 +218,17 @@ export const ExpensesItem = styled.li`
   }
 `;
 
+export const NoRegisterMessage = styled.h3`
+  font-size: 1rem;
+  margin: 0;
+  color: #333;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+  }
+`;
+
 export const LogoutButton = styled(Button)`
   margin-top: 2rem;
 

@@ -10,7 +10,8 @@ import {
   ExpensesSection, MonthlyExpenses, MonthlyExpensesColor, GoalExpenses, 
   ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, 
   ExpensesItem, LogoutButton, ExpensesIcon, ReceiptsItem, ReceiptsColor, 
-  NotificationButton, NotificationContainer 
+  NotificationButton, NotificationContainer, 
+  NoRegisterMessage
 } from './style';
 import Add from '../../images/add.png';
 import moment from 'moment';
@@ -271,32 +272,38 @@ const Home: React.FC = () => {
       </ExpensesTitle>
       <ExpensesContainer>
         <ExpensesList>
-          {currentMonthExpenses.map(expense => (
-            <ExpensesItem key={expense._id}>
-              <ExpensesIcon src={transfer} />
-              <div>
-                <p>Descrição: {expense.name}</p>
-                <p>Categoria: {expense.type}</p>
-              </div>
-              <div>
-                <p>Data: {formatDate(expense.date)}</p>
-                <p><MonthlyExpensesColor>R$ -{expense.value.toFixed(2)}</MonthlyExpensesColor></p>
-              </div>
-            </ExpensesItem>
-          ))}
-          {currentMonthReceipts.map(receipt => (
-            <ReceiptsItem key={receipt._id}>
-              <ExpensesIcon src={receita} />
-              <div>
-                <p>Descrição: {receipt.name}</p>
-                <p>Categoria: {receipt.category}</p>
-              </div>
-              <div>
-                <p>Data: {formatDate(receipt.date)}</p>
-                <p><ReceiptsColor>R$ +{receipt.value.toFixed(2)}</ReceiptsColor></p>
-              </div>
-            </ReceiptsItem>
-          ))}
+          {currentMonthExpenses.length === 0 && currentMonthReceipts.length === 0 ? (
+            <NoRegisterMessage>Ainda não tem registros adicionados.</NoRegisterMessage>
+          ) : (
+            <>
+              {currentMonthExpenses.map(expense => (
+                <ExpensesItem key={expense._id}>
+                  <ExpensesIcon src={transfer} />
+                  <div>
+                    <p>Descrição: {expense.name}</p>
+                    <p>Categoria: {expense.type}</p>
+                  </div>
+                  <div>
+                    <p>Data: {formatDate(expense.date)}</p>
+                    <p><MonthlyExpensesColor>R$ -{expense.value.toFixed(2)}</MonthlyExpensesColor></p>
+                  </div>
+                </ExpensesItem>
+              ))}
+              {currentMonthReceipts.map(receipt => (
+                <ReceiptsItem key={receipt._id}>
+                  <ExpensesIcon src={receita} />
+                  <div>
+                    <p>Descrição: {receipt.name}</p>
+                    <p>Categoria: {receipt.category}</p>
+                  </div>
+                  <div>
+                    <p>Data: {formatDate(receipt.date)}</p>
+                    <p><ReceiptsColor>R$ +{receipt.value.toFixed(2)}</ReceiptsColor></p>
+                  </div>
+                </ReceiptsItem>
+              ))}
+            </>
+          )}
         </ExpensesList>
       </ExpensesContainer>
       <br />
