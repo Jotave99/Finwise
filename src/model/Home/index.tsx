@@ -11,7 +11,9 @@ import {
   ExpensesTitle, ExpensesButton, ExpensesContainer, ExpensesList, 
   ExpensesItem, LogoutButton, ExpensesIcon, ReceiptsItem, ReceiptsColor, 
   NotificationButton, NotificationContainer, 
-  NoRegisterMessage
+  NoRegisterMessage,
+  GoalLink,
+  MonthlyZeroExpensesColor
 } from './style';
 import Add from '../../images/add.png';
 import moment from 'moment';
@@ -252,9 +254,15 @@ const Home: React.FC = () => {
           </Info>
         )}
         <ExpensesSection>
-          <MonthlyExpenses>Gastos esse mês:<br /> <MonthlyExpensesColor>R$ -{totalExpenses?.toFixed(2)}</MonthlyExpensesColor></MonthlyExpenses>
+          <MonthlyExpenses>Gastos desse mês:<br />
+            {totalExpenses !== null && totalExpenses !== 0 ? (
+              <MonthlyExpensesColor>R$ -{totalExpenses.toFixed(2)}</MonthlyExpensesColor>
+            ) : (
+              <MonthlyZeroExpensesColor>R$ 0</MonthlyZeroExpensesColor>
+            )}
+          </MonthlyExpenses>
           {goal !== null && (
-            <GoalExpenses>Meta de gastos:<br /> R$ {goal.amount}</GoalExpenses>
+            <GoalExpenses>Meta de gastos: <GoalLink to="/addGoal">+</GoalLink><br /> R$ {goal.amount}</GoalExpenses>
           )}
         </ExpensesSection>
       </BalanceContainer>

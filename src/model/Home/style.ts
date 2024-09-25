@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -89,11 +90,10 @@ export const Button = styled.button`
 
 export const ExpensesSection = styled.div`
   display: flex;
-  margin-top: 1rem;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
   width: 100%;
+  color: #fff;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -103,9 +103,11 @@ export const ExpensesSection = styled.div`
 
 export const MonthlyExpenses = styled.p`
   font-size: 1.2rem;
+  margin-right: 2rem;
 
   @media (max-width: 768px) {
     font-size: 1rem;
+    margin-right: 0;
   }
 `;
 
@@ -118,14 +120,35 @@ export const MonthlyExpensesColor = styled.span`
   }
 `;
 
+export const MonthlyZeroExpensesColor = styled.span`
+  color: #fff;
+  font-size: 1.7rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+`;
+
 export const GoalExpenses = styled.p`
   font-size: 1.2rem;
   margin-right: 50px;
+  margin-top: 10px;
 
   @media (max-width: 768px) {
     font-size: 1rem;
     margin-right: 0;
     margin-top: 1rem;
+  }
+`;
+
+export const GoalLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.5rem;
+
+  &:hover {
+    color: #f0f0f0;
   }
 `;
 
