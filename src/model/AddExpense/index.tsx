@@ -58,10 +58,10 @@ const AddExpense: React.FC = () => {
           <img src={Seta} alt="Voltar" />
         </Link>
         <Title>Adicione uma Despesa:</Title>
-        <Text>Pode ser tanto um gasto, quanto um recebimento.</Text>
+        <Text>Adicione suas despesas do dia-a-dia</Text>
         <Form onSubmit={handleSubmit}>
           <Text>Nome</Text>
-          <Input type="text" placeholder="EX: recebeu um pix ou enviou" value={name} onChange={handleNameChange} />
+          <Input type="text" placeholder="EX: uma conta para pagar ou uma compra" value={name} onChange={handleNameChange} />
           <Text>Categoria</Text>
           <Select value={type} onChange={handleTypeChange}>
             <Option value="">Selecione uma categoria</Option>

@@ -109,3 +109,13 @@ export const ErrorMessage = styled.div`
     font-size: 10px;
   }
 `;
+
+export const SuccessMessage = styled.div`
+  color: green;
+  font-size: 12px;
+  margin-top: 5px;
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+  }
+`;
